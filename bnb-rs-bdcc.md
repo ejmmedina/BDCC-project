@@ -14,7 +14,7 @@
 This study aims to find which amenities should owners/hosts need to add to their Airbnb properties to become more competitive in their different segments. Using the Inside Airbnb dataset available in jojie filtered to listings only, we looked into clustering the listings based on the different features such as number of bedrooms, property type, etc. and recommend what amenities are most needed to increase the value of the property per cluster. The data consists of listings from 2015 to 2019 amounting to about 16 million rows with 106 features, comprising a total of 85GB.
 </div>
 
-K-Means algorithm was used in performing the clustering of listings. Eight (8) clusters were identified based on the validation criterias and clustering are based on the type and size of the listings. The clusters obtained are the following indicating their characteristics: 
+K-Means algorithm was used in performing the clustering of listings. Eight (8) clusters were identified based on the validation criterias and clustering are based on the type and size of the listings. The clusters obtained are the following indicating their characteristics:
    - Cluster 0: Lower-middle end
    - Cluster 1: Middle end (entire home)
    - Cluster 2: Upper-middle end
@@ -28,9 +28,9 @@ K-Means algorithm was used in performing the clustering of listings. Eight (8) c
 After obtaining the clusters, user-based collaborative filtering was then used to make recommendations of amenities per cluster. However, what makes this system different is that it recommends amenities to the low-rated listings using the similar listings but with high rating. This is to find what the low-rated listings are missing that the high-rated listings have. Doing this would also help the owners address customer convenience, increase its listing's popularity, and further understand what the customers really needs.
 </div>
 
-Results of the recommender system showed that what the low-rated listings are lacking are not necessarily the most commonly needed amenities but the very much desired ones. Some of which includes `Wifi`, `hair dryer`, and `iron`, and the `essentials` which are known to be always being used when going on a vacation or a trip. This possibly is the reason why they are being low-rated. 
+Results of the recommender system showed that what the low-rated listings are lacking are not necessarily the most commonly needed amenities but the very much desired ones. Some of which includes `Wifi`, `hair dryer`, and `iron`, and the `essentials` which are known to be always being used when going on a vacation or a trip. This possibly is the reason why they are being low-rated.
 
-For future studies, we recommend to extend this study to be a general recommender system which can cater listings from different countries or city, especially those which are not commonly visited by tourists. This is to help them improve their listings by adding necessary amenities mostly wanted by the customers. A monetary value of every amenity being added could also be explored by predicting the price or rating of the listing after implementing the recommended amenity. 
+For future studies, we recommend to extend this study to be a general recommender system which can cater listings from different countries or city, especially those which are not commonly visited by tourists. This is to help them improve their listings by adding necessary amenities mostly wanted by the customers. A monetary value of every amenity being added could also be explored by predicting the price or rating of the listing after implementing the recommended amenity.
 
 ## Introduction
 
@@ -38,7 +38,7 @@ For future studies, we recommend to extend this study to be a general recommende
 `Airbnb` is the world's largest accomodation-sharing website which lets 'hosts' rent out their properties to guests. It has been growing rapidly since its launch in 2009 where it only served **around 20,000 guests that year to around 500,000 guests per night**. This amount of users is not only a testament to how many people Airbnb is able to help but also to how much potential it has as a business. As of December 2019, Airbnb's value worldwide is 38 USD billion and grossing around 93 USD million in profit per year.
 
 ### Why Listings?
-`Listings` are the product of Airbnb. It is every house, apartment and hotel room that you see posted in their website. These listings cater to each of the 150 million customers worldwide. Given this market, it is to no surprise that property owners would want to become Airbnb hosts. Currently, Airbnb has around **650,000 hosts in over 191 countries** and each of these hosts earn an average of 11,000 dollars per year. 
+`Listings` are the product of Airbnb. It is every house, apartment and hotel room that you see posted in their website. These listings cater to each of the 150 million customers worldwide. Given this market, it is to no surprise that property owners would want to become Airbnb hosts. Currently, Airbnb has around **650,000 hosts in over 191 countries** and each of these hosts earn an average of 11,000 dollars per year.
 
 ### Why Paris?
 For the interest of this project, the data was segmented only to listings located in `Paris, France`. The city of love is one of the most famous tourist spots there is and perhaps because of that, **houses the most number of listings in a single city**. Though this study is specific for Paris, the methodology should work for any city and thus, tweak the recommender to cater for any city.
@@ -177,7 +177,7 @@ dtypes['review_scores_rating'] = np.float64
 clus_feat = ['id', 'city', 'property_type', 'room_type',
              'accommodates', 'bathrooms', 'bedrooms', 'beds', 'square_feet']
 df_clus = dd.read_csv(f"s3://bdcc-project-lt6/data{fnames[0]}/data/listings.csv.gz",
-                      compression='gzip', dtype=dtypes, assume_missing=True, 
+                      compression='gzip', dtype=dtypes, assume_missing=True,
                       error_bad_lines=False, blocksize=None, engine='python')[clus_feat]
 failed_files = []
 i = 1
@@ -185,7 +185,7 @@ i = 1
 for fname in fnames[1:]:
     print(100*i/(len(fnames)-1))
     try:
-        df_clus = df_clus.append(dd.read_csv(f"s3://bdcc-project-lt6/data{fname}/data/listings.csv.gz", 
+        df_clus = df_clus.append(dd.read_csv(f"s3://bdcc-project-lt6/data{fname}/data/listings.csv.gz",
                                              compression='gzip',
                                              dtype=dtypes, assume_missing=True,
                                              error_bad_lines=False,
@@ -198,7 +198,7 @@ for fname in fnames[1:]:
 ```
 
     100.0
-    
+
 
 
 ```python
@@ -789,7 +789,7 @@ for n in range(3, 11):
     Begin clustering to 10 clusters
     Done clustering. Begin evaluating clusters...
     Done evaluating!
-    
+
 
 
 ```python
@@ -809,7 +809,7 @@ plt.legend()
 
 
 
-![png](output_42_1.png)
+![png](output_img/output_42_1.png)
 
 
 <div align='justify'>In evaluating how good the clusters are, the clusters formed must have low SSE, high Calinski-Harabasz score, and high Silhouette coefficient. For visualization and decision-making purposes, we normalize the validation scores by their maximum value to make proper comparisions and decide the best number of clusters.</div>
@@ -835,11 +835,11 @@ plt.legend()
 
 
 
-![png](output_44_1.png)
+![png](output_img/output_44_1.png)
 
 
 From the plot above, 8 clusters have low SSE while having high CH and Silhouette scores.
-After getting the clusters, we can now look at the characteristics of each cluster. In terms of size, the clusters are balanced, except for some clusters with lower but comparable sizes (and one cluster that is very small) as shown in the figure below. 
+After getting the clusters, we can now look at the characteristics of each cluster. In terms of size, the clusters are balanced, except for some clusters with lower but comparable sizes (and one cluster that is very small) as shown in the figure below.
 
 
 ```python
@@ -866,7 +866,7 @@ plt.title('Distribution of Listings per Cluster');
 ```
 
 
-![png](output_47_0.png)
+![png](output_img/output_47_0.png)
 
 
 Appending the cluster number with the working dataset, we have:
@@ -1137,7 +1137,7 @@ df_num_std.transpose()
 
 
 
-From the numerical features, two clusters stand out - Cluster 5 and Cluster 7. Cluster 5, while only containing 7 listings, represents the extreme listings wherein the number of bathrooms, bedrooms, and beds it has is significantly higher than those other clusters. Cluster 7 is a less extreme version of Cluster 5, which is why it still has 1782 listings. 
+From the numerical features, two clusters stand out - Cluster 5 and Cluster 7. Cluster 5, while only containing 7 listings, represents the extreme listings wherein the number of bathrooms, bedrooms, and beds it has is significantly higher than those other clusters. Cluster 7 is a less extreme version of Cluster 5, which is why it still has 1782 listings.
 
 On the other end is cluster 6, corresponding to listings with minimal number of rooms, especially bathroom. Its less extreme version is cluster 3. Note that the size of both is still significant, indicative of the huge number of low-end listings.
 
@@ -1162,7 +1162,7 @@ df_property_type
     Cluster 5 - 0.01%
     Cluster 6 - 18.91%
     Cluster 7 - 1.49%
-    
+
 
 
 
@@ -1352,7 +1352,7 @@ df_room_type
     Cluster 5 - 0.01%
     Cluster 6 - 18.91%
     Cluster 7 - 1.49%
-    
+
 
 
 
@@ -1490,7 +1490,7 @@ for fname in fnames[1:]: #forloop instead of wildcard since different files have
 ```
 
     100.0
-    
+
 
 #### Data Preprocessing
 
@@ -1562,7 +1562,7 @@ df_utility.shape[0].compute()
 
 
 
-From the resulting utility matrix, we can look at the frequency distribution of amenities. Most of the listings have 10 to 20 amenities with a few listings having 50 to 70 amenities. Except for a few large scale listings, it can be seen that the standards of listings is to have around 10 to 20 amenities. 
+From the resulting utility matrix, we can look at the frequency distribution of amenities. Most of the listings have 10 to 20 amenities with a few listings having 50 to 70 amenities. Except for a few large scale listings, it can be seen that the standards of listings is to have around 10 to 20 amenities.
 
 
 ```python
@@ -1576,7 +1576,7 @@ plt.ylabel('frequency');
 ```
 
 
-![png](output_88_0.png)
+![png](output_img/output_88_0.png)
 
 
 <div align='justify'>Now, we want to see if the number of amenities of a listing affects the review on that listing. If the two are positively correlated, then our recommendations may simply be to continuously add amenities for it to improve, which may make the project uninsightful. If not, what matters is not simply adding new amenities but also which specific amenity to add, which brings the point of our recommender system - suggesting which amenities to add to keep up with the competition.
@@ -1607,7 +1607,7 @@ df_plot.plot.scatter('count_amen', 'reviews')
 
 
 
-![png](output_91_1.png)
+![png](output_img/output_91_1.png)
 
 
 Looking at their overall correlation, we find a 0.1558 correlation between the two variables, indicating a weak relationship.
@@ -1640,7 +1640,7 @@ plt.ylabel('frequency')
 ```
 
 
-![png](output_95_0.png)
+![png](output_img/output_95_0.png)
 
 
 #### Filtering data by Ratings
@@ -1718,7 +1718,7 @@ clusters = clusters[['id', 'clusters']]
 df_util_summary = pd.DataFrame()
 for i in cluss:
     if i==5:#cluster 5 is removed for RS since we cannot make recommendations in it due to the small size
-        continue 
+        continue
     df_i = df_utility.map_partitions(lambda x: x[x.index.isin(clusters[clusters['clusters']==i].id)])
     result_i = df_i.mean(axis=0).compute()
     df_util_summary[cluster_names[i]] = result_i.sort_values(ascending=False)[:20]
@@ -1974,12 +1974,12 @@ hm.set_xticklabels(labels=hm.get_xticklabels(), rotation=45, ha='right');
 ```
 
 
-![png](output_111_0.png)
+![png](output_img/output_111_0.png)
 
 
 #### User-Based Collaborative Filtering Recommender System
 
-For user-based collaborative filtering recommender system, we have to choose a pre-processing technique and a distance measure to use in order to determine which listings are the nearest neighbors. Note that the utility matrix here has rows equivalent to all the listings, columns for all the amenities, and value of 1 or 0 if the listing has the amenity. We do not perform any pre-processing as the utility matrix already looks like a rounded data due to the implicit nature of the ratings. 
+For user-based collaborative filtering recommender system, we have to choose a pre-processing technique and a distance measure to use in order to determine which listings are the nearest neighbors. Note that the utility matrix here has rows equivalent to all the listings, columns for all the amenities, and value of 1 or 0 if the listing has the amenity. We do not perform any pre-processing as the utility matrix already looks like a rounded data due to the implicit nature of the ratings.
 
 The distance measure used will be Jaccard distance but we must also take into consideration the difference in number of amenities the two listing has. While Jaccard already takes into account the gap between the number of amenities the two listings being compared has, we want to further emphasize the distance two listings will have if they have significant difference in the number of amenities they have. As such, we define the distance measure as:
 
@@ -2040,37 +2040,37 @@ for i in cluss:
 
     Lower-middle cluster
     Low: 229
-    High: 10099 
-    
+    High: 10099
+
     Middle (entire home) cluster
     Low: 108
-    High: 4606 
-    
+    High: 4606
+
     Upper-middle cluster
     Low: 72
-    High: 2801 
-    
+    High: 2801
+
     Low end cluster
     Low: 246
-    High: 8135 
-    
+    High: 8135
+
     Middle (Private rooms) cluster
     Low: 103
-    High: 4539 
-    
+    High: 4539
+
     Ultra high end cluster
     Low: 0
-    High: 2 
-    
+    High: 2
+
     Ultra low end cluster
     Low: 196
-    High: 6865 
-    
+    High: 6865
+
     High end cluster
     Low: 9
-    High: 616 
-    
-    
+    High: 616
+
+
 
 <div align='justify'>Due to small number of listings on it, no recommendations will be done within the ultra high end cluster. The following set of codes is generating recommendations of amenities per cluster. For each cluster, 100 low-rated listings are given recommendations to at most (if possible). The resulting recommendations are stored into a pickle file for later use. Since the recommendations per user are independent of each other, the code is highly parallelizable. However, doing so for 100 at a time causes killed workers and memory error. So, the recommendations are done 10 users at a time.</div>
 
@@ -2095,7 +2095,7 @@ for i in range(1, 11): #we do the recommendations 10 users at a time since the d
     results0 = dask.compute(recommend_i, scheduler='distributed',
                            num_workers=6)   
     print(len(results0[0]))
-    
+
     recommend_amenities_clus_0.update(results0[0])
 ```
 
@@ -2126,7 +2126,7 @@ for i in range(1, 11):
         recommend_i[user_id] = delayed_func(user)
     results = dask.compute(recommend_i, scheduler='distributed',
                            num_workers=12)   
-    
+
     recommend_amenities_clus_1.update(results[0])
 ```
 
@@ -2226,7 +2226,7 @@ for i in range(1, 11):
         recommend_i[user_id] = delayed_func(user)
     results = dask.compute(recommend_i, scheduler='distributed',
                            num_workers=12)   
-    
+
 
     print(len(results[0]))
     recommend_amenities_clus_4.update(results[0])
@@ -2352,7 +2352,7 @@ plt.xlabel("Proportion of listings")
 ```
 
 
-![png](output_144_0.png)
+![png](output_img/output_144_0.png)
 
 
 By setting a threshold of 50% (i.e. at least half of the similar neighbors has the specific amenity), the overall recommendations across clusters are shown above. Washers, iron, and wifi are most recommended across different clusters. Rather than focusing on these results, we look at the recommendations per cluster and see if it varies from the overall recommendations.
@@ -2641,10 +2641,10 @@ hm2.set_xticklabels(labels=hm2.get_xticklabels(), rotation=45, ha='right')
 ```
 
 
-![png](output_149_0.png)
+![png](output_img/output_149_0.png)
 
 
-It is interesting to note that amenities like kitchen and essentials, among others, are very common across listings but are not usually recommended. This may be because these amenities are not the key ingredients in achieving a high ranking. This also shows the disparity of high ranking listing to low ranking ones wherein these amenities are not highly valued as they are things that can also be found in low-rated listings. 
+It is interesting to note that amenities like kitchen and essentials, among others, are very common across listings but are not usually recommended. This may be because these amenities are not the key ingredients in achieving a high ranking. This also shows the disparity of high ranking listing to low ranking ones wherein these amenities are not highly valued as they are things that can also be found in low-rated listings.
 
 
 ```python
@@ -2655,10 +2655,10 @@ hm.set_xticklabels(labels=hm.get_xticklabels(), rotation=45, ha='right')
 ```
 
 
-![png](output_151_0.png)
+![png](output_img/output_151_0.png)
 
 
-Now, looking at the recommendations per cluster in the heatmap below, we can see that the top 5 amenities per cluster is usually similar, except for the high-end cluster. Due to the scale of the listings under the high-end cluster, it is expected for these listings to already contain essentials like washers, which is also the reason why the washer is ranked 12 among its recommended amenities. Regardless of scale of the listings, what is commonly missing for low-rated listings are `WiFi`, `Hair dryer`, and `Iron`, amenities which cannot be said as completely necessary but is very much desired by customers. Another interesting observation is the `Essentials` which is ranked highly for the lower to middle-end listings but ranked lowly for larger-scale listings. This is consistent with what we found since essentials is usually already available so it is not usually recommended for the higher-end listings. Other similarities and differences can be observed from the plot above like kitchen being relatively highly ranked for middle-end private rooms. 
+Now, looking at the recommendations per cluster in the heatmap below, we can see that the top 5 amenities per cluster is usually similar, except for the high-end cluster. Due to the scale of the listings under the high-end cluster, it is expected for these listings to already contain essentials like washers, which is also the reason why the washer is ranked 12 among its recommended amenities. Regardless of scale of the listings, what is commonly missing for low-rated listings are `WiFi`, `Hair dryer`, and `Iron`, amenities which cannot be said as completely necessary but is very much desired by customers. Another interesting observation is the `Essentials` which is ranked highly for the lower to middle-end listings but ranked lowly for larger-scale listings. This is consistent with what we found since essentials is usually already available so it is not usually recommended for the higher-end listings. Other similarities and differences can be observed from the plot above like kitchen being relatively highly ranked for middle-end private rooms.
 
 For all visualizations and analysis done above, the recommender system is still personalized, i.e. it is done at a per listings level. The aggregation per cluster is only done for analysis and visualization purposes.
 
@@ -2666,7 +2666,7 @@ For all visualizations and analysis done above, the recommender system is still 
 
 <br>
 <div align='justify'>In this study, we were able to identify eight (8) clusters of listings based on the type and size of the property. No definitive name of clusters can be defined but based on the summary statistics of the features used, we obtained groupings based on the size of the listings. The number of listings per cluster were somehow balanced except for Cluster 5 with only 7 listings, representing the extreme listing with significantly larger property size compared to others. The clusters obtained are shown below including its defined characteristics:
- 
+
 <br>
 
 - Cluster 0: Lower-middle end
@@ -2677,7 +2677,7 @@ For all visualizations and analysis done above, the recommender system is still 
 - Cluster 5: Ultra high end
 - Cluster 6: Ultra low end
 - Cluster 7: High end
-    
+
 
 Additionally, we were able to provide a personalized recommender system at a listing level which can determine what amenities to add to that listing based on its similar high-rated listings. It was found out that what the low-rated listings lack are the amenities that the customers very much want to have that would give them comfort and this possibly give them the reason why they are far beyond being high-rated one.    
 </div>
