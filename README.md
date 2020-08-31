@@ -9,4 +9,4 @@ The data used in this analysis is from Inside Airbnb. The data consists of listi
 
 ##### Report and analysis
 
-The full report is included in the Jupyter notebook. If you have any questions regarding this study, please send me a message via <a href="mailto:elijahjustinmedina@gmail.com">e-mail</a> or <a href="https://www.linkedin.com/in/elijah-justin-medina/">LinkedIn</a>.
+The full report is included in the <a href="https://github.com/ejmmedina/upgrading-amenities-bnb/blob/master/bnb-rs-bdcc.md">Jupyter notebook</a>. If you have any questions regarding this study, please send me a message via <a href="mailto:elijahjustinmedina@gmail.com">e-mail</a> or <a href="https://www.linkedin.com/in/elijah-justin-medina/">LinkedIn</a>.
